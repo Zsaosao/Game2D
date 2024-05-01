@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import main.GamePanel;
-import main.KeyHandler;
+import controller.KeyHandler;
+import model.GamePanel;
 import object.SuperObject;
 
 import java.awt.Rectangle;
@@ -25,7 +25,7 @@ public class Player extends Entry {
     public int screenY;
 
     // Item in bag
-    int hasKey = 0;
+    int hasKey = 3;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         this.gamePanel = gamePanel;
@@ -56,7 +56,6 @@ public class Player extends Entry {
         if (keyHandler.up || keyHandler.down || keyHandler.left || keyHandler.right) {
             if (keyHandler.up) {
                 currentDirection = "up";
-
             }
             if (keyHandler.down) {
                 currentDirection = "down";
@@ -194,6 +193,7 @@ public class Player extends Entry {
                 this.speed += 2;
                 gamePanel.objectList.remove(objIndex);
                 gamePanel.soundEffect.playSound(2);
+                gamePanel.ui.showMessage("You get a running boost !", 2);
             }
 
         }
