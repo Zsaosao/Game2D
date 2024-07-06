@@ -1,6 +1,8 @@
-package model;
+
 
 import javax.swing.JFrame;
+
+import controller.Controller;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,7 +10,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
-        GamePanel gamePanel = new GamePanel();
+        Controller gamePanel = new Controller();
 
         window.add(gamePanel);
         window.pack();

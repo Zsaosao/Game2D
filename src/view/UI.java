@@ -5,11 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import model.GamePanel;
+import controller.Controller;
 import object.OBJ_Key;
 
 public class UI {
-    GamePanel gamePanel;
+    Controller gamePanel;
     Font arial_40;
     BufferedImage keyImage;
     boolean isShowMessageBox = false;
@@ -18,7 +18,7 @@ public class UI {
     int time;
     int sumFps;
 
-    public UI(GamePanel gamePanel) {
+    public UI(Controller gamePanel) {
         this.gamePanel = gamePanel;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         keyImage = new OBJ_Key().image;

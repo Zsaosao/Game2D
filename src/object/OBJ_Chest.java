@@ -2,9 +2,13 @@ package object;
 
 import javax.imageio.ImageIO;
 
+import controller.Controller;
+
 public class OBJ_Chest extends SuperObject {
 
-    public OBJ_Chest(int x, int y) {
+    Controller gamePanel;
+
+    public OBJ_Chest(int x, int y, Controller gamePanel) {
         this.worldX = x;
         this.worldY = y;
         this.name = "chest";
@@ -14,5 +18,7 @@ public class OBJ_Chest extends SuperObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        gamePanel.objectList.add(this);
     }
 }

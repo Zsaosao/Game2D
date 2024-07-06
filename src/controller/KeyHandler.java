@@ -4,12 +4,10 @@ package controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import model.GamePanel;
-
 public class KeyHandler implements KeyListener {
-    GamePanel gamePanel;
+    Controller gamePanel;
 
-    public KeyHandler(GamePanel gamePanel) {
+    public KeyHandler(Controller gamePanel) {
         this.gamePanel = gamePanel;
     }
 
@@ -25,16 +23,16 @@ public class KeyHandler implements KeyListener {
 
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
-            up = true;
+            gamePanel.setDirection("up");
         }
         if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
-            left = true;
+            gamePanel.setDirection("left");
         }
         if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
-            down = true;
+            gamePanel.setDirection("down");
         }
         if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
-            right = true;
+            gamePanel.setDirection("right");
         }
         if (keyCode == KeyEvent.VK_SPACE) {
             gamePanel.pause = !gamePanel.pause;
@@ -45,16 +43,16 @@ public class KeyHandler implements KeyListener {
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
-            up = false;
+            gamePanel.setDirection("stop");
         }
         if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
-            left = false;
+            gamePanel.setDirection("stop");
         }
         if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
-            down = false;
+            gamePanel.setDirection("stop");
         }
         if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
-            right = false;
+            gamePanel.setDirection("stop");
         }
     }
 

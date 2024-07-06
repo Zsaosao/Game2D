@@ -1,15 +1,16 @@
-package model;
+package controller;
 
-import entry.Entry;
+import model.Player;
+import model.Entry;
 
 public class CollisionChecker {
-    GamePanel gamePanel;
+    Controller gamePanel;
 
-    public CollisionChecker(GamePanel gamePanel) {
+    public CollisionChecker(Controller gamePanel) {
         this.gamePanel = gamePanel;
     }
 
-    public void checkTile(Entry e) {
+    public void checkTile(Player e) {
         int entryLeftWorldX = e.worldX + e.soilArea.x;
         int entryRightWorldX = e.worldX + e.soilArea.x + e.soilArea.width;
         int entryTopWorldY = e.worldY + e.soilArea.y;

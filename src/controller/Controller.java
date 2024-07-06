@@ -1,10 +1,9 @@
-package model;
+package controller;
 
-// rename to Model
+
 import javax.swing.JPanel;
 
-import controller.KeyHandler;
-import entry.Player;
+import model.Player;
 import music.Sound;
 import object.SuperObject;
 import tile.TileManager;
@@ -17,7 +16,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GamePanel extends JPanel implements Runnable {
+public class Controller extends JPanel implements Runnable {
     final int originalTileSize = 16;
     final int scale = 3;
 
@@ -32,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Thread gameThread;
     KeyHandler keyHandler = new KeyHandler(this);
 
-    public Player player = new Player(this, keyHandler);
+    public Player player = new Player(this);
     public TileManager tileManager = new TileManager(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public List<SuperObject> objectList = new ArrayList<SuperObject>();
@@ -55,6 +54,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public boolean pause = false;
 
+    View view = new View(this);
+
+    String direction = "stop";
+
     public void startMusic() {
         music.setSound(0);
         music.loopSound();
@@ -67,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
         startMusic();
     }
 
-    public GamePanel() {
+    public Controller() {
         this.setPreferredSize(new Dimension(maxScreenSizeWidth, maxScreenSizeHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
@@ -92,8 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (deltaTime >= 1) {
-                update();
-                repaint();
+             update();
                 deltaTime--;
                 drawCount++;
             }
@@ -111,41 +113,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (pause) {
             return;
         }
-        player.update();
+        player.update(direction);
 
     }
 
-    View view = new View(this);
-
-    // paintComponent is called by repaint() // mvc is view
+    // paintComponent is called by repaint() player called repaint()
     public void paintComponent(Graphics g) {
-        // if (pause) {
-        // ui.pause((Graphics2D) g);
-        // return;
-        // }
-        // super.paintComponent(g);
-
-        // Graphics2D g2d = (Graphics2D) g;
-        // g2d.setColor(Color.WHITE);
-
-        // tileManager.draw(g2d); // zindex 0
-        // for (int i = 0; i < objectList.size(); i++) {
-        // objectList.get(i).draw(g2d, this);
-        // } // zindex 5
-
-        // player.draw(g2d); // zindex 10
-        // ui.draw(g2d); // zindex 15
-        // ui.DrawMessageBox(g2d); // zindex 20
-
-        // if (isGameFinish) {
-        // ui.drawWin(g2d); // zindex 25
-        // music.stopSound();
-        // soundEffect.playSound(4);
-        // this.gameThread = null;
-
-        // }
-
-        // g2d.dispose(); // release resources
         view.paintComponent(g);
 
     }
@@ -156,6 +129,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setGameFinish() {
         this.isGameFinish = true;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
 }

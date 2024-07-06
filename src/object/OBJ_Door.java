@@ -2,9 +2,13 @@ package object;
 
 import javax.imageio.ImageIO;
 
+import controller.Controller;
+
 public class OBJ_Door extends SuperObject {
 
-    public OBJ_Door(int x, int y) {
+    Controller gamePanel;
+
+    public OBJ_Door(int x, int y, Controller gamePanel) {
         this.worldX = x;
         this.worldY = y;
         this.name = "door";
@@ -15,5 +19,7 @@ public class OBJ_Door extends SuperObject {
             e.printStackTrace();
         }
         collision = true;
+
+        gamePanel.objectList.add(this);
     }
 }

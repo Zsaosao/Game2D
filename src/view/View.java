@@ -2,16 +2,16 @@ package view;
 
 import javax.swing.JPanel;
 
-import model.GamePanel;
+import controller.Controller;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class View extends JPanel {
-    GamePanel gamePanel;
+    Controller gamePanel;
 
-    public View(GamePanel gamePanel) {
+    public View(Controller gamePanel) {
         this.gamePanel = gamePanel;
     }
 

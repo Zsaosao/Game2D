@@ -3,19 +3,19 @@ package tile;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.GamePanel;
+import controller.Controller;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class TileManager {
-    GamePanel gamePanel;
+    Controller gamePanel;
     public List<Tile> tileList;
 
     public int[][] map;
 
-    public TileManager(GamePanel gamePanel) {
+    public TileManager(Controller gamePanel) {
         this.gamePanel = gamePanel;
         tileList = new ArrayList<>();
         map = new int[gamePanel.maxWorldCol][gamePanel.maxWorldRow];

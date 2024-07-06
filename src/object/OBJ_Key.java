@@ -2,7 +2,12 @@ package object;
 
 import javax.imageio.ImageIO;
 
+import controller.Controller;
+
 public class OBJ_Key extends SuperObject {
+
+    Controller gamePanel;
+
     public OBJ_Key() {
         this.name = "key";
 
@@ -13,7 +18,7 @@ public class OBJ_Key extends SuperObject {
         }
     }
 
-    public OBJ_Key(int x, int y) {
+    public OBJ_Key(int x, int y, Controller gamePanel) {
         this.worldX = x;
         this.worldY = y;
         this.name = "key";
@@ -23,5 +28,7 @@ public class OBJ_Key extends SuperObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        gamePanel.objectList.add(this);
     }
 }

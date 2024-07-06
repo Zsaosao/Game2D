@@ -1,19 +1,17 @@
-package entry;
+package model;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-
+import controller.Controller;
 import controller.KeyHandler;
-import model.GamePanel;
 import object.SuperObject;
 
 import java.awt.Rectangle;
 
 public class Player extends Entry {
 
-    GamePanel gamePanel;
+    Controller gamePanel;
     KeyHandler keyHandler;
 
     int spriteIndex = 0;
@@ -25,11 +23,12 @@ public class Player extends Entry {
     public int screenY;
 
     // Item in bag
-    int hasKey = 3;
+    int hasKey = 0;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
+    IMove iMove;
+
+    public Player(Controller gamePanel) {
         this.gamePanel = gamePanel;
-        this.keyHandler = keyHandler;
         setDefaultLocation();
 
     }
@@ -39,7 +38,9 @@ public class Player extends Entry {
         worldY = 21 * gamePanel.tileSize;
         speed = 4;
         currentDirection = "down";
-        getPlayerImage();
+        // Strategy pattern set movement type by foot for player or set movement type by
+        // wing or car in the future
+        iMove = new MoveByFoot(speed);
 
         // set collision area
         soilArea = new Rectangle(0, 0, 20, 20);
@@ -52,23 +53,11 @@ public class Player extends Entry {
 
     }
 
-    public void update() {
-        if (keyHandler.up || keyHandler.down || keyHandler.left || keyHandler.right) {
-            if (keyHandler.up) {
-                currentDirection = "up";
-            }
-            if (keyHandler.down) {
-                currentDirection = "down";
+    public void update(String direction) {
+        if (direction != "stop") {
 
-            }
-            if (keyHandler.left) {
-                currentDirection = "left";
+            currentDirection = direction;
 
-            }
-            if (keyHandler.right) {
-                currentDirection = "right";
-
-            }
             collision = false;
             gamePanel.collisionChecker.checkTile(this);
 
@@ -76,16 +65,16 @@ public class Player extends Entry {
             this.printItem();
 
             if (collision == false) {
-                if (keyHandler.up) {
+                if (direction == "up") {
                     worldY -= speed;
                 }
-                if (keyHandler.down) {
+                if (direction == "down") {
                     worldY += speed;
                 }
-                if (keyHandler.left) {
+                if (direction == "left") {
                     worldX -= speed;
                 }
-                if (keyHandler.right) {
+                if (direction == "right") {
                     worldX += speed;
                 }
             }
@@ -95,7 +84,10 @@ public class Player extends Entry {
                 spriteIndex = (spriteIndex == 0) ? 1 : 0;
                 spriteDelayCounter = 0;
             }
+
         }
+        // model call controller
+        gamePanel.repaint();
 
     }
 
@@ -104,31 +96,31 @@ public class Player extends Entry {
         switch (currentDirection) {
             case "up":
                 if (spriteIndex == 0) {
-                    playerImage = up1;
+                    playerImage = iMove.getUp1();
                 } else {
-                    playerImage = up2;
+                    playerImage = iMove.getUp2();
                 }
                 break;
             case "down":
                 if (spriteIndex == 0) {
-                    playerImage = down1;
+                    playerImage = iMove.getDown1();
                 } else {
-                    playerImage = down2;
+                    playerImage = iMove.getDown2();
                 }
 
                 break;
             case "left":
                 if (spriteIndex == 0) {
-                    playerImage = left1;
+                    playerImage = iMove.getLeft1();
                 } else {
-                    playerImage = left2;
+                    playerImage = iMove.getLeft2();
                 }
                 break;
             case "right":
                 if (spriteIndex == 0) {
-                    playerImage = right1;
+                    playerImage = iMove.getRight1();
                 } else {
-                    playerImage = right2;
+                    playerImage = iMove.getRight2();
                 }
                 break;
             default:
@@ -136,27 +128,6 @@ public class Player extends Entry {
         }
 
         g2d.drawImage(playerImage, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
-
-    }
-
-    public void getPlayerImage() {
-        try {
-            up1 = ImageIO.read(getClass().getResource("/res/player/boy_up_1.png"));
-            up2 = ImageIO.read(getClass().getResource("/res/player/boy_up_2.png"));
-
-            down1 = ImageIO.read(getClass().getResource("/res/player/boy_down_1.png"));
-            down2 = ImageIO.read(getClass().getResource("/res/player/boy_down_2.png"));
-
-            left1 = ImageIO.read(getClass().getResource("/res/player/boy_left_1.png"));
-            left2 = ImageIO.read(getClass().getResource("/res/player/boy_left_2.png"));
-
-            right1 = ImageIO.read(getClass().getResource("/res/player/boy_right_1.png"));
-            right2 = ImageIO.read(getClass().getResource("/res/player/boy_right_2.png"));
-
-        } catch (Exception e) {
-            System.out.println("Error loading player images");
-            e.printStackTrace();
-        }
 
     }
 

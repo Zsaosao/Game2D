@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import model.GamePanel;
+import controller.Controller;
 
 public class SuperObject {
     public BufferedImage image;
@@ -16,7 +16,7 @@ public class SuperObject {
     public int soilAreaDefaultX = soilArea.x;
     public int soilAreaDefaultY = soilArea.y;
 
-    public void draw(Graphics2D g, GamePanel gamePanel) {
+    public void draw(Graphics2D g, Controller gamePanel) {
         int screenX = worldX - gamePanel.player.worldX + gamePanel.maxScreenSizeWidth / 2;
         int screenY = worldY - gamePanel.player.worldY + gamePanel.maxScreenSizeHeight / 2;
         if (worldX + 2 * gamePanel.tileSize > gamePanel.player.worldX - gamePanel.player.screenX
